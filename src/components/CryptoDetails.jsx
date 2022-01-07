@@ -6,9 +6,7 @@ import millify from 'millify';
 import Loader from './Loader'
 // import Linechart from './Linechart';
 import { DollarCircleOutlined , ThunderboltOutlined, FundOutlined, MoneyCollectOutlined, ExclamationCircleOutlined, StopOutlined, NumberOutlined, CheckOutlined, TrophyOutlined } from '@ant-design/icons'
-import {Typography, Row, Col, Select} from 'antd'
-
-const {Option} = Select ;
+import {Typography, Row, Col} from 'antd'
 
 
 const CryptoDetails = () => {
@@ -21,7 +19,7 @@ const CryptoDetails = () => {
     if( isFetching ) return <Loader />;
     const cryptoDetails = data?.data?.coin ;
 
-    const time = ['3h', '24h', '7d', '30d', '1y', '3m', '3y', '5y'];
+    //const time = ['3h', '24h', '7d', '30d', '1y', '3m', '3y', '5y'];
 
     const stats = [
         { title: 'Price to USD', value: `$ ${cryptoDetails?.price && millify(cryptoDetails?.price)}`, icon: <DollarCircleOutlined /> },
