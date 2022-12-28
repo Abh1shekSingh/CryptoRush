@@ -4,9 +4,11 @@ import { useParams } from 'react-router-dom';
 import { useGetCryptosDetailsQuery, useGetCryptosHistroyDetailsQuery } from '../services/cryptoApi'
 import millify from 'millify';
 import Loader from './Loader'
-// import Linechart from './Linechart';
+import Linechart from './Linechart';
 import { DollarCircleOutlined , ThunderboltOutlined, FundOutlined, MoneyCollectOutlined, ExclamationCircleOutlined, StopOutlined, NumberOutlined, CheckOutlined, TrophyOutlined } from '@ant-design/icons'
-import {Typography, Row, Col} from 'antd'
+import {Typography, Row, Col, Select} from 'antd'
+
+const { Option } = Select;
 
 
 const CryptoDetails = () => {
@@ -15,13 +17,13 @@ const CryptoDetails = () => {
     const [timeperiod, setTimeperiod] = useState('7d');
     const { data , isFetching } = useGetCryptosDetailsQuery(coinId);
     const { data:coinHistory } = useGetCryptosHistroyDetailsQuery({coinId ,timeperiod});
-    console.log(coinHistory);
+    // console.log(coinHistory);
     if( isFetching ) return <Loader />;
     const cryptoDetails = data?.data?.coin ;
-    console.log(cryptoDetails)
+    // console.log(cryptoDetails)
 
     
-    //const time = ['3h', '24h', '7d', '30d', '1y', '3m', '3y', '5y'];
+    const time = ['3h', '24h', '7d', '30d', '1y', '3m', '3y', '5y'];
 
     const stats = [
         { title: 'Price to USD', value: `$ ${cryptoDetails?.price && millify(cryptoDetails?.price)}`, icon: <DollarCircleOutlined /> },
@@ -47,12 +49,14 @@ const CryptoDetails = () => {
                 </Typography.Title>
                 <p>{cryptoDetails.name} Live Price in USD</p>
             </Col>
-            {/* <Select defaultValue='7d' placeholder='Select Time Period' style={{width:'200px'}} onChange={(value) => setTimeperiod(value)}>
+            <Select defaultValue='7d' placeholder='Select Time Period' style={{width:'200px'}} onChange={(value) => setTimeperiod(value)}>
                 {time.map((date) => (
                     <Option key={date}>{date}</Option>
                 ))}
-            </Select> */}
-            {/* <Linechart coinHistory = {coinHistory} currentPrice = {millify(cryptoDetails.price)} cryptoName = {cryptoDetails.name} /> */}
+            </Select>
+            <div style={{width:'100%'}}>
+            <Linechart coinHistory = {coinHistory} currentPrice = {millify(cryptoDetails.price)} cryptoName = {cryptoDetails.name} />
+            </div>
             <Col className='stats-container'>
                 <Col className='coin-stats'>
                     <Col className='coin-stats-heading'>
